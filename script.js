@@ -18,17 +18,17 @@
 
   /* ---------- Data ---------- */
   const ROUTES = [
-    { from: "Nyabugogo", to: "Nyagatare",   time: "3h",    price: 6700,   img: IMG.nyabugogo, label: "Nyabugogo" },
-    { from: "Nyanza",    to: "Nyamata",  time: "50m",     price: 1000,   img: IMG.nyabarongo, label: "Nyamata" },
-    { from: "Nyabugogo",    to: "Rwemasha",   time: "3h 30m", price: 7500,   img: IMG.kicukiro,  label: "Rwemasha" },
+    { from: "Nyabugogo", to: "Nyagatare",   time: "3h",    price: 6712,   img: IMG.nyabugogo, label: "Nyabugogo" },
+    { from: "Nyanza",    to: "Nyamata",  time: "50m",     price: 1029,   img: IMG.nyabarongo, label: "Nyamata" },
+    { from: "Nyabugogo",    to: "Rwemasha",   time: "3h 30m", price: 9200,   img: IMG.kicukiro,  label: "Rwemasha" },
   ];
 
   const DESTINATIONS = [
-    { from: "Nyanza",    to: "Nyamata",  time: "50m",     price: 1000, img: IMG.nyabarongo, label: "Nyamata" },
+    { from: "Nyanza",    to: "Nyamata",  time: "50m",     price: 1029, img: IMG.nyabarongo, label: "Nyamata" },
     { from: "Nyagatare", to: "Remera",   time: "2h 30m", price: 6000, img: IMG.remera, label: "Remera" },
-    { stops: ["Nyagatare", "Rwamagana", "Nyabugogo"], time: "3h",     price: 6700,  img: IMG.nyagatare,  label: "Nyabugogo" },
+    { stops: ["Nyagatare", "Rwamagana", "Nyabugogo"], time: "3h",     price: 6712,  img: IMG.nyagatare,  label: "Nyabugogo" },
     { stops: ["Nyabugogo", "Kayonza", "Nyagatare", "Rwemasha"], time: "3h 30m", price: 9200,  img: IMG.kicukiro,  label: "Rwemasha" },
-    { stops: ["Nyanza", "Nyamata", "Ramiro"], time: "1h", price: 2200,  img: IMG.kivu,       label: "Ramiro" },
+    { stops: ["Nyanza", "Nyamata", "Ramiro"], time: "1h", price: 2198,  img: IMG.kivu,       label: "Ramiro" },
   ];
 
   const money = (amount) => new Intl.NumberFormat("en-RW", {
