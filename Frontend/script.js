@@ -11,7 +11,7 @@
   const isLocal = ["localhost", "127.0.0.1"].includes(location.hostname);
   const API_BASE = isLocal
     ? "http://localhost:3000"
-    : "https://excel-travel-backend.onrender.com";
+    : "https://excel-travel-website.onrender.com";
 
   /* ---------- Real photos ---------- */
   const IMG = {
