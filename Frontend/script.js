@@ -4,6 +4,15 @@
 (function () {
   "use strict";
 
+  /* ---------- Backend ----------
+     The contact forms POST here. Replace the Render URL below with your own
+     once the service is deployed (Render shows it on the service page).
+     Running from localhost automatically talks to a local backend instead. */
+  const isLocal = ["localhost", "127.0.0.1"].includes(location.hostname);
+  const API_BASE = isLocal
+    ? "http://localhost:3000"
+    : "https://excel-travel-backend.onrender.com";
+
   /* ---------- Real photos ---------- */
   const IMG = {
     nyabugogo: "./images/Nyabugogo.jpg",
@@ -69,44 +78,99 @@
     if (all) { all.innerHTML = DESTINATIONS.map(routeCardHTML).join(""); }
   }
 
-  /* ---------- Contact widget (on index & routes pages) ---------- */
-  function initWidgetContact() {
-    const btn = document.getElementById("widgetContactSend");
-    if (!btn) return;
-    btn.addEventListener("click", () => {
-      const name  = document.getElementById("wName");
-      const email = document.getElementById("wEmail");
-      const msg   = document.getElementById("wMsg");
-      const out   = document.getElementById("widgetFeedback");
-      out.classList.remove("error");
-      if (!name.value.trim() || !email.value.trim() || !msg.value.trim()) {
-        out.textContent = "Please fill in your name, email and message.";
+  /* ---------- Contact form submission ---------- */
+
+  /**
+   * Shared submit handler for both contact forms.
+   * `fields` holds the input elements; `out` is the feedback paragraph.
+   */
+  async function submitContact({ btn, out, fields, source, successText }) {
+    const name    = fields.name.value.trim();
+    const email   = fields.email.value.trim();
+    const message = fields.message.value.trim();
+    const subject = fields.subject ? fields.subject.value : "General enquiry";
+    const company = fields.company ? fields.company.value : "";
+
+    out.classList.remove("error");
+    out.style.color = "";
+
+    if (!name || !email || !message) {
+      out.textContent = "Please fill in your name, email and message.";
+      out.classList.add("error");
+      return;
+    }
+
+    const originalLabel = btn.textContent;
+    btn.disabled = true;
+    btn.textContent = "Sending…";
+    out.textContent = "";
+
+    try {
+      const res = await fetch(`${API_BASE}/api/contact`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, subject, message, company, source }),
+      });
+
+      const data = await res.json().catch(() => ({}));
+
+      if (!res.ok || !data.ok) {
+        out.textContent = data.error || "We could not send your message. Please try again.";
         out.classList.add("error");
         return;
       }
+
       out.style.color = "var(--green-dark)";
-      out.textContent = `✓ Thanks ${name.value.trim().split(" ")[0]}! We'll be in touch within 24 hours.`;
-      name.value = ""; email.value = ""; msg.value = "";
-    });
+      out.textContent = successText(name.split(" ")[0]);
+      fields.name.value = ""; fields.email.value = ""; fields.message.value = "";
+    } catch (err) {
+      out.textContent = "Network problem — please check your connection and try again.";
+      out.classList.add("error");
+    } finally {
+      btn.disabled = false;
+      btn.textContent = originalLabel;
+    }
+  }
+
+  /* ---------- Contact widget (on routes page) ---------- */
+  function initWidgetContact() {
+    const btn = document.getElementById("widgetContactSend");
+    if (!btn) return;
+    btn.addEventListener("click", () =>
+      submitContact({
+        btn,
+        out: document.getElementById("widgetFeedback"),
+        fields: {
+          name:    document.getElementById("wName"),
+          email:   document.getElementById("wEmail"),
+          message: document.getElementById("wMsg"),
+          company: document.getElementById("wCompany"),
+        },
+        source: "routes page widget",
+        successText: (first) => `✓ Thanks ${first}! We'll be in touch within 24 hours.`,
+      })
+    );
   }
 
   /* ---------- Contact form (contact.html) ---------- */
   function initContact() {
     const btn = document.getElementById("contactSend");
     if (!btn) return;
-    btn.addEventListener("click", () => {
-      const name  = document.getElementById("cName");
-      const email = document.getElementById("cEmail");
-      const msg   = document.getElementById("cMsg");
-      const out   = document.getElementById("contactFeedback");
-      out.classList.remove("error");
-      if (!name.value.trim() || !email.value.trim() || !msg.value.trim()) {
-        out.textContent = "Please fill in your name, email and message."; out.classList.add("error"); return;
-      }
-      out.style.color = "var(--green-dark)";
-      out.textContent = `✓ Thanks ${name.value.trim().split(" ")[0]}! Your message has been sent — we'll reply within 24 hours.`;
-      name.value = ""; email.value = ""; msg.value = "";
-    });
+    btn.addEventListener("click", () =>
+      submitContact({
+        btn,
+        out: document.getElementById("contactFeedback"),
+        fields: {
+          name:    document.getElementById("cName"),
+          email:   document.getElementById("cEmail"),
+          message: document.getElementById("cMsg"),
+          subject: document.getElementById("cSubject"),
+          company: document.getElementById("cCompany"),
+        },
+        source: "contact page",
+        successText: (first) => `✓ Thanks ${first}! Your message has been sent — we'll reply within 24 hours.`,
+      })
+    );
   }
 
   /* ---------- Header scroll + mobile menu ---------- */

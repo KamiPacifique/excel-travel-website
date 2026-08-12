@@ -1,0 +1,23 @@
+{
+  "name": "excel-travel-backend",
+  "version": "1.0.0",
+  "description": "Contact-form mail relay for Excel Travel & Tours (Resend, no database).",
+  "private": true,
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "express-rate-limit": "^8.2.1",
+    "helmet": "^8.3.0",
+    "resend": "^6.1.2"
+  }
+}

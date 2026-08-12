@@ -76,8 +76,8 @@
         <!-- FORM -->
         <div class="contact-form reveal">
           <h2 class="section-title" style="font-size:24px;margin-bottom:18px">Send us a message</h2>
-          <label class="field"><span>Full name</span><input type="text" id="cName" placeholder="Your name" /></label>
-          <label class="field"><span>Email</span><input type="email" id="cEmail" placeholder="you@example.com" /></label>
+          <label class="field"><span>Full name</span><input type="text" id="cName" placeholder="Your name" maxlength="100" required /></label>
+          <label class="field"><span>Email</span><input type="email" id="cEmail" placeholder="you@example.com" maxlength="200" required /></label>
           <label class="field"><span>Subject</span>
             <select id="cSubject">
               <option>General enquiry</option>
@@ -86,7 +86,9 @@
               <option>Corporate travel</option>
             </select>
           </label>
-          <label class="field"><span>Message</span><textarea id="cMsg" placeholder="How can we help?"></textarea></label>
+          <label class="field"><span>Message</span><textarea id="cMsg" placeholder="How can we help?" maxlength="5000" required></textarea></label>
+          <!-- Spam trap: hidden from people, filled in by bots. Leave empty. -->
+          <input type="text" id="cCompany" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0" />
           <button class="btn btn-primary" id="contactSend" style="width:100%">Send message</button>
           <p class="widget-feedback" id="contactFeedback" role="status" style="margin-top:14px"></p>
         </div>
