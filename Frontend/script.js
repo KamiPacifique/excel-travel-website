@@ -10,7 +10,7 @@
     nyabarongo: "./images/Nyabarongo.jpg",
     kicukiro:  "./images/kicukiro.jpg",
     nyagatare: "./images/Nyagatare.jpeg",
-    remera:"./images/Remera.jpg",
+    remera:"./images/remera.jpg",
     kivu:      "https://images.unsplash.com/photo-1514548383638-cef9251a73ec?auto=format&fit=crop&w=1200&q=80",
     hills:     "https://images.unsplash.com/photo-1565349479047-d6211d4efc90?auto=format&fit=crop&w=1200&q=80",
     kigali:    "https://images.unsplash.com/photo-1687986261123-b17f08f2796c?auto=format&fit=crop&w=1200&q=80",
